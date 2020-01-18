@@ -2,6 +2,7 @@ Build.PL
 Changes
 kirinki
 lib/kirinki.pm
+lib/kirinki/config.pm
 lib/kirinki/git.pm
 MANIFEST			This list of files
 README
