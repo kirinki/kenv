@@ -4,6 +4,8 @@ use 5.006;
 use strict;
 use warnings;
 
+use Config::Tiny;
+
 =head1 NAME
 
 kirinki::config - Manage the configurations of the kirinki command.
@@ -48,6 +50,7 @@ sub new {
 	my $self = {
 		location => $ENV{"HOME"} . '/.config/kirinki',
 		filename => 'kirinkirc',
+		filepath => $ENV{"HOME"} . '/.config/kirinki/kirinkirc',
 		data => {},
 	};
 
@@ -72,11 +75,10 @@ sub checkConfigFile {
 		mkdir $self->{'location'}, 0755;
 	}
 
-	my $configFile = $self->{'location'} . '/' . $self->{'filename'};
-	unless ( -e $configFile ) {
-		print "Generating config file ${configFile}...\n";
-		open(my $fh, '>', $configFile)
-			or die "Could not open file '$configFile' $!";
+	unless ( -e $self->{'filepath'} ) {
+		print 'Generating config file ' . $self->{'filepath'} . "...\n";
+		open(my $fh, '>', $self->{'filepath'})
+			or die 'Could not open file ' . $self->{'filepath'} . " $!";
 		print $fh "[general]\n";
 		close $fh;
 	}
@@ -92,6 +94,11 @@ sub load {
 	my $self = shift;
 
 	$self->checkConfigFile();
+	$self->{'data'} = Config::Tiny->read( $self->{'filepath'}, 'utf8' );
+	if (length(Config::Tiny->errstr()) > 0) {
+		die 'Unable to read from the config file: ' . Config::Tiny->errstr() .
+			"\n";
+	}
 }
 
 =head2 save

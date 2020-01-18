@@ -8,9 +8,10 @@ projects environment.
 To install this module, run the following commands:
 
 	perl Build.PL
+	sudo ./Build installdeps
 	./Build
 	./Build test
-	./Build install
+	sudo ./Build install
 
 ## SUPPORT AND DOCUMENTATION
 

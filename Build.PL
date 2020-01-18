@@ -17,8 +17,7 @@ my $builder = Module::Build->new(
 		'Test::More' => '0',
 	},
 	requires => {
-		#'ABC'				=> '1.6',
-		#'Foo::Bar::Module' => '5.0401',
+		'Config::Tiny' => '2.24',
 	},
 	add_to_cleanup	   => [ 'kirinki-*' ],
 	script_files => ['kirinki'],

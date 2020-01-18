@@ -23,6 +23,8 @@ provides:
   kirinki::git:
     file: lib/kirinki/git.pm
     version: '0.01'
+requires:
+  Config::Tiny: '2.24'
 resources:
   license: http://www.perlfoundation.org/artistic_license_2_0
 version: '0.02'
