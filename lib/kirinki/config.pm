@@ -58,13 +58,13 @@ sub new {
 	return $self;
 }
 
-=head2 load
+=head2 checkConfigFile
 
-Load the configurations from the configuration file.
+Checks that the config file is fine.
 
 =cut
 
-sub load {
+sub checkConfigFile {
 	my $self = shift;
 
 	unless ( -d $self->{'location'} ) {
@@ -80,6 +80,18 @@ sub load {
 		print $fh "[general]\n";
 		close $fh;
 	}
+}
+
+=head2 load
+
+Load the configurations from the configuration file.
+
+=cut
+
+sub load {
+	my $self = shift;
+
+	$self->checkConfigFile();
 }
 
 =head2 save
