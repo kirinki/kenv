@@ -136,6 +136,16 @@ sub set {
 	my $self = shift;
 }
 
+=head2 exists
+
+Checks if a configuration exists.
+
+=cut
+
+sub exists {
+	my $self = shift;
+}
+
 =head1 AUTHOR
 
 Pablo Alvarez de Sotomayor Posadillo, C<< <palvarez at ritho.net> >>
