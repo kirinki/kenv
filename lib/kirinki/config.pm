@@ -94,8 +94,8 @@ sub load {
 	my $self = shift;
 
 	$self->checkConfigFile();
-	$self->{'data'} = Config::Tiny->read( $self->{'filepath'}, 'utf8' );
-	if (length(Config::Tiny->errstr()) > 0) {
+	$self->{'data'} = Config::Tiny->read($self->{'filepath'}, 'utf8');
+	if (Config::Tiny->errstr) {
 		die 'Unable to read from the config file: ' . Config::Tiny->errstr() .
 			"\n";
 	}
@@ -109,6 +109,11 @@ Save the configurations to the configuration file.
 
 sub save {
 	my $self = shift;
+
+	my $written = $self->{'data'}->write($self->{'filepath'}, 'utf8');
+	unless ($written) {
+		die "Unable to save the configurations.\n";
+	}
 }
 
 =head2 get

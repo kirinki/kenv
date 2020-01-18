@@ -54,6 +54,8 @@ sub new {
 
 	bless $self, $class;
 
+	$self->{'config'}->save();
+
 	return $self;
 }
 
