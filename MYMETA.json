@@ -28,7 +28,7 @@
    "provides" : {
       "kirinki" : {
          "file" : "lib/kirinki.pm",
-         "version" : "0.01"
+         "version" : "0.02"
       },
       "kirinki::config" : {
          "file" : "lib/kirinki/config.pm",
@@ -45,6 +45,6 @@
          "http://www.perlfoundation.org/artistic_license_2_0"
       ]
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_serialization_backend" : "JSON::PP version 4.02"
 }

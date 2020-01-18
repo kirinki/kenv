@@ -46,7 +46,7 @@ Create a new configuration object.
 sub new {
 	my $class = shift;
 	my $self = {
-		location => '~/.config/kirinki',
+		location => $ENV{"HOME"} . '/.config/kirinki',
 		filename => 'kirinkirc',
 		data => {},
 	};
@@ -67,8 +67,19 @@ Load the configurations from the configuration file.
 sub load {
 	my $self = shift;
 
-	print 'Location: ' . $self->{'location'} . "\n";
-	print 'Filename: ' . $self->{'filename'} . "\n";
+	unless ( -d $self->{'location'} ) {
+		print 'Creating directory ' . $self->{'location'} . "...\n";
+		mkdir $self->{'location'}, 0755;
+	}
+
+	my $configFile = $self->{'location'} . '/' . $self->{'filename'};
+	unless ( -e $configFile ) {
+		print "Generating config file ${configFile}...\n";
+		open(my $fh, '>', $configFile)
+			or die "Could not open file '$configFile' $!";
+		print $fh "[general]\n";
+		close $fh;
+	}
 }
 
 =head2 save
