@@ -4,17 +4,19 @@ use 5.006;
 use strict;
 use warnings;
 
+use kirinki::config;
+
 =head1 NAME
 
 kirinki - Kirinki environment manager.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 =head1 SYNOPSIS
@@ -45,6 +47,14 @@ Create a new Kirinki object.
 =cut
 
 sub new {
+	my $class = shift;
+	my $self = {
+		config => kirinki::config->new()
+	};
+
+	bless $self, $class;
+
+	return $self;
 }
 
 =head2 init

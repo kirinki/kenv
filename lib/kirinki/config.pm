@@ -45,12 +45,14 @@ Create a new configuration object.
 
 sub new {
 	my $class = shift;
-	my $self = {};
+	my $self = {
+		location => '~/.config/kirinki',
+		filename => 'kirinkirc',
+		data => {},
+	};
 
 	bless $self, $class;
 
-	$self->configLocation = '~/.config/kirinki';
-	$self->filename = 'kirinkirc';
 	$self->load();
 
 	return $self;
@@ -64,6 +66,9 @@ Load the configurations from the configuration file.
 
 sub load {
 	my $self = shift;
+
+	print 'Location: ' . $self->{'location'} . "\n";
+	print 'Filename: ' . $self->{'filename'} . "\n";
 }
 
 =head2 save

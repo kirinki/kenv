@@ -17,6 +17,9 @@ provides:
   kirinki:
     file: lib/kirinki.pm
     version: '0.01'
+  kirinki::config:
+    file: lib/kirinki/config.pm
+    version: '0.01'
   kirinki::git:
     file: lib/kirinki/git.pm
     version: '0.01'
