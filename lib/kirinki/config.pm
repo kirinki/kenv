@@ -85,6 +85,25 @@ sub checkConfigFile {
 	}
 }
 
+=head2 getKeys
+
+Get a list of keys to look in the configuration.
+
+=cut
+
+sub getKeys {
+	my $self = shift;
+	my $config = shift;
+
+	my @splitted = split /\./, $config;
+	if (@splitted > 2) {
+		my $last = @splitted - 2;
+		@splitted = (join('.', @splitted[0..$last]), $splitted[$last]);
+	}
+
+	return @splitted;
+}
+
 =head2 load
 
 Load the configurations from the configuration file.
@@ -132,8 +151,8 @@ sub get {
 	}
 
 	my $level = $self->{'data'};
-	my @splitted = split /\./, $config;
-	foreach my $cfg (@splitted) {
+	my @configs = $self->getKeys($config);
+	foreach my $cfg (@configs) {
 		if (defined $level->{$cfg}) {
 			$level = $level->{$cfg};
 		} else {
@@ -160,11 +179,11 @@ sub set {
 	}
 
 	my $level = $self->{'data'};
-	my @splitted = split /\./, $config;
+	my @configs = $self->getKeys($config);
 	my $i = 0;
-	foreach my $cfg (@splitted) {
+	foreach my $cfg (@configs) {
 		unless (defined $level->{$cfg}) {
-			if ($i == $#splitted) {
+			if ($i == $#configs) {
 				$level->{$cfg} = $value;
 			} else {
 				$level->{$cfg} = {};
@@ -193,8 +212,8 @@ sub exists {
 	}
 
 	my $level = $self->{'data'};
-	my @splitted = split /\./, $config;
-	foreach my $cfg (@splitted) {
+	my @configs = $self->getKeys($config);
+	foreach my $cfg (@configs) {
 		if (defined $level->{$cfg}) {
 			$level = $level->{$cfg};
 		} else {

@@ -54,12 +54,6 @@ sub new {
 
 	bless $self, $class;
 
-	$self->{'config'}->set('github.username', 'i02sopop');
-	$self->{'config'}->set('github.password', 'i02sopop');
-	# $self->{'config'}->set('github.repositories.kirinki', 'kirinki');
-	print $self->{'config'}->str();
-	$self->{'config'}->save();
-
 	return $self;
 }
 
