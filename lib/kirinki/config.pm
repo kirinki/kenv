@@ -124,6 +124,23 @@ Get a configuration value.
 
 sub get {
 	my $self = shift;
+	my $config = shift;
+
+	unless (defined $config) {
+		return undef();
+	}
+
+	my $level = $self->{'data'};
+	my @splitted = split /\./, $config;
+	foreach my $cfg (@splitted) {
+		if (defined $level->{$cfg}) {
+			$level = $level->{$cfg};
+		} else {
+			return undef();
+		}
+	}
+
+	return $level;
 }
 
 =head2 set
@@ -134,6 +151,30 @@ Set a configuration value.
 
 sub set {
 	my $self = shift;
+	my $config = shift;
+	my $value = shift;
+
+	unless (defined $config && defined $value) {
+		return undef();
+	}
+
+	my $level = $self->{'data'};
+	my @splitted = split /\./, $config;
+	my $i = 0;
+	foreach my $cfg (@splitted) {
+		unless (defined $level->{$cfg}) {
+			if ($i == $#splitted) {
+				$level->{$cfg} = $value;
+			} else {
+				$level->{$cfg} = {};
+			}
+		}
+
+		$level = $level->{$cfg};
+		$i++;
+	}
+
+	return 1;
 }
 
 =head2 exists
@@ -144,6 +185,23 @@ Checks if a configuration exists.
 
 sub exists {
 	my $self = shift;
+	my $config = shift;
+
+	unless (defined $config) {
+		return 0;
+	}
+
+	my $level = $self->{'data'};
+	my @splitted = split /\./, $config;
+	foreach my $cfg (@splitted) {
+		if (defined $level->{$cfg}) {
+			$level = $level->{$cfg};
+		} else {
+			return 0;
+		}
+	}
+
+	return 1;
 }
 
 =head1 AUTHOR

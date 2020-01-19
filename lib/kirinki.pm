@@ -54,8 +54,6 @@ sub new {
 
 	bless $self, $class;
 
-	$self->{'config'}->save();
-
 	return $self;
 }
 
@@ -67,6 +65,17 @@ the values as much as possible.
 =cut
 
 sub init {
+	my $self = shift;
+}
+
+=head2 config
+
+Handle the configuration commands.
+
+=cut
+
+sub config {
+	my $self = shift;
 }
 
 =head1 AUTHOR
