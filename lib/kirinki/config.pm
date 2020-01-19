@@ -98,7 +98,7 @@ sub getKeys {
 	my @splitted = split /\./, $config;
 	if (@splitted > 2) {
 		my $last = @splitted - 2;
-		@splitted = (join('.', @splitted[0..$last]), $splitted[$last]);
+		@splitted = (join('.', @splitted[0..$last]), $splitted[-1]);
 	}
 
 	return @splitted;
@@ -160,6 +160,10 @@ sub get {
 		}
 	}
 
+	if ($level =~ /;/) {
+		return split(/;/, $level);
+	}
+
 	return $level;
 }
 
@@ -182,15 +186,24 @@ sub set {
 	my @configs = $self->getKeys($config);
 	my $i = 0;
 	foreach my $cfg (@configs) {
-		unless (defined $level->{$cfg}) {
-			if ($i == $#configs) {
-				$level->{$cfg} = $value;
+		if ($i == $#configs) {
+			my $type = ref $value;
+			if ($type && reftype $value eq reftype []) {
+				$level->{$cfg} = join(';', @$value);
 			} else {
-				$level->{$cfg} = {};
+				$level->{$cfg} = $value;
 			}
+		} else {
+			unless (defined $level->{$cfg}) {
+				if ($i == $#configs) {
+				} else {
+					$level->{$cfg} = {};
+				}
+			}
+
+			$level = $level->{$cfg};
 		}
 
-		$level = $level->{$cfg};
 		$i++;
 	}
 
