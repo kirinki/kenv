@@ -237,6 +237,16 @@ sub exists {
 	return 1;
 }
 
+=head2 delete
+
+Deletes a configuration.
+
+=cut
+
+sub delete {
+	my $self = shift;
+}
+
 =head2 str
 
 Returns all the configurations in string.
