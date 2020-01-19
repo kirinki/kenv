@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Config::Tiny;
+use Scalar::Util qw/reftype/;
 
 =head1 NAME
 
@@ -202,6 +203,36 @@ sub exists {
 	}
 
 	return 1;
+}
+
+=head2 str
+
+Returns all the configurations in string.
+
+=cut
+
+sub str {
+	my $self = shift;
+	my $configs = shift;
+
+	unless (defined $configs) {
+		$configs = $self->{'data'};
+	}
+
+	my $res = "";
+	foreach my $cfg (keys %$configs) {
+		my $type = ref $configs->{$cfg};
+		if ($type && reftype $configs->{$cfg} eq reftype {}) {
+			my $str = $self->str($configs->{$cfg});
+			if (length $str) {
+				$res .= $cfg . '.' . $str . "\n";
+			}
+		} else {
+			$res = "$cfg = " . $configs->{$cfg};
+		}
+	}
+
+	return $res;
 }
 
 =head1 AUTHOR
