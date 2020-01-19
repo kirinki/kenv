@@ -214,21 +214,32 @@ Returns all the configurations in string.
 sub str {
 	my $self = shift;
 	my $configs = shift;
+	my $parent = shift;
 
 	unless (defined $configs) {
 		$configs = $self->{'data'};
+	}
+
+	unless (defined $parent) {
+		$parent = '';
 	}
 
 	my $res = "";
 	foreach my $cfg (keys %$configs) {
 		my $type = ref $configs->{$cfg};
 		if ($type && reftype $configs->{$cfg} eq reftype {}) {
-			my $str = $self->str($configs->{$cfg});
-			if (length $str) {
-				$res .= $cfg . '.' . $str . "\n";
+			my $newParent = $parent;
+			if ($newParent) {
+				$newParent .= '.';
+			}
+
+			$newParent .= "$cfg";
+			my $str = $self->str($configs->{$cfg}, $newParent);
+			if (length($str) > 0) {
+				$res .= $str;
 			}
 		} else {
-			$res = "$cfg = " . $configs->{$cfg};
+			$res .= "$parent.$cfg = " . $configs->{$cfg} . "\n";
 		}
 	}
 
