@@ -131,8 +131,9 @@ sub save {
 	my $self = shift;
 
 	my $written = $self->{'data'}->write($self->{'filepath'}, 'utf8');
-	unless ($written) {
-		die "Unable to save the configurations.\n";
+	if (Config::Tiny->errstr) {
+		die 'Unable to write the config file: ' . Config::Tiny->errstr() .
+			"\n";
 	}
 }
 
