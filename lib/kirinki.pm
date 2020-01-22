@@ -134,10 +134,16 @@ sub config {
 		}
 		else {
 			if (defined $action) {
-				print "Unknown $action\n";
+				print "Unknown action $action.\n";
 			} else {
-				print "Missing action\n";
+				print "Missing action.\n";
 			}
+
+			print "Possible actions:
+\t* list: List all the configurations.
+\t* set: Add/modify a configuration.
+\t* unset: Remove a configuration.
+\t* clean: Remove all the configurations.\n";
 		}
 	}
 }
