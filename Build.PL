@@ -18,6 +18,7 @@ my $builder = Module::Build->new(
 	},
 	requires => {
 		'Config::Tiny' => '2.24',
+		'Switch' => '2.17',
 	},
 	add_to_cleanup	   => [ 'kirinki-*' ],
 	script_files => ['kirinki'],

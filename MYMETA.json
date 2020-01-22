@@ -21,7 +21,8 @@
       },
       "runtime" : {
          "requires" : {
-            "Config::Tiny" : "2.24"
+            "Config::Tiny" : "2.24",
+            "Switch" : "2.17"
          }
       },
       "test" : {
@@ -33,11 +34,11 @@
    "provides" : {
       "kirinki" : {
          "file" : "lib/kirinki.pm",
-         "version" : "0.02"
+         "version" : "0.03"
       },
       "kirinki::config" : {
          "file" : "lib/kirinki/config.pm",
-         "version" : "0.01"
+         "version" : "0.02"
       },
       "kirinki::git" : {
          "file" : "lib/kirinki/git.pm",
@@ -50,6 +51,6 @@
          "http://www.perlfoundation.org/artistic_license_2_0"
       ]
    },
-   "version" : "0.02",
+   "version" : "0.03",
    "x_serialization_backend" : "JSON::PP version 4.02"
 }
