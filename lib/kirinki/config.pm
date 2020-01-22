@@ -131,8 +131,9 @@ sub save {
 	my $self = shift;
 
 	my $written = $self->{'data'}->write($self->{'filepath'}, 'utf8');
-	unless ($written) {
-		die "Unable to save the configurations.\n";
+	if (Config::Tiny->errstr) {
+		die 'Unable to write the config file: ' . Config::Tiny->errstr() .
+			"\n";
 	}
 }
 
@@ -196,6 +197,7 @@ sub set {
 		} else {
 			unless (defined $level->{$cfg}) {
 				if ($i == $#configs) {
+					$level->{$cfg} = $value;
 				} else {
 					$level->{$cfg} = {};
 				}
@@ -232,6 +234,40 @@ sub exists {
 		} else {
 			return 0;
 		}
+	}
+
+	return 1;
+}
+
+=head2 delete
+
+Deletes a configuration.
+
+=cut
+
+sub delete {
+	my $self = shift;
+	my $config = shift;
+
+	unless (defined $config) {
+		return 0;
+	}
+
+	my $level = $self->{'data'};
+	my @configs = $self->getKeys($config);
+	my $i = 0;
+	foreach my $cfg (@configs) {
+		unless (defined $level->{$cfg}) {
+			return 0;
+		}
+
+		if ($i == $#configs) {
+			delete $level->{$cfg};
+		} else {
+			$level = $level->{$cfg};
+		}
+
+		$i++;
 	}
 
 	return 1;
