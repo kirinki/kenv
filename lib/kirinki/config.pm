@@ -196,6 +196,7 @@ sub set {
 		} else {
 			unless (defined $level->{$cfg}) {
 				if ($i == $#configs) {
+					$level->{$cfg} = $value;
 				} else {
 					$level->{$cfg} = {};
 				}
@@ -245,6 +246,27 @@ Deletes a configuration.
 
 sub delete {
 	my $self = shift;
+	my $config = shift;
+
+	unless (defined $config) {
+		return 0;
+	}
+
+	my $level = $self->{'data'};
+	my @configs = $self->getKeys($config);
+	foreach my $cfg (@configs) {
+		unless (defined $level->{$cfg}) {
+			return 0;
+		}
+
+		if ($i == $#configs) {
+			delete $level->{$cfg};
+		} else {
+			$level = $level->{$cfg};
+		}
+	}
+
+	return 1;
 }
 
 =head2 str
