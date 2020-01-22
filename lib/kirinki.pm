@@ -3,6 +3,7 @@ package kirinki;
 use 5.006;
 use strict;
 use warnings;
+use Switch;
 
 use kirinki::config;
 
@@ -16,7 +17,7 @@ Version 0.02
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 
 =head1 SYNOPSIS
@@ -85,12 +86,85 @@ sub init {
 
 =head2 config
 
-Handle the configuration commands.
+Handle the config command.
 
 =cut
 
 sub config {
 	my $self = shift;
+	my $action = shift;
+	my @params = @_;
+
+	switch($action) {
+		case "list" {
+			print $self->{'config'}->str();
+		}
+		case "set" {
+			my $key = shift @params;
+			my $value = shift @params;
+			unless (defined($key) && defined($value)) {
+				die "Missing parameters\n";
+			}
+
+			if (@params > 0) {
+				print "Ignoring the parameters @params\n";
+			}
+
+			die "Unable to save $key\n"
+				unless $self->{'config'}->set($key, $value);
+			$self->{'config'}->save();
+		}
+		case "unset" {
+			my $key = shift @params;
+			unless (defined($key)) {
+				die "Missing parameters\n";
+			}
+
+			if (@params > 0) {
+				print "Ignoring the parameters @params\n";
+			}
+
+			die "Unable to delete $key\n"
+				unless $self->{'config'}->delete($key);
+			$self->{'config'}->save();
+		}
+		case "clean" {
+			$self->{'config'}->clean();
+			$self->{'config'}->save();
+		}
+		else {
+			if (defined $action) {
+				print "Unknown $action\n";
+			} else {
+				print "Missing action\n";
+			}
+		}
+	}
+}
+
+=head2 cmd
+
+Handle the kirinki commands.
+
+=cut
+
+sub cmd {
+	my $self = shift;
+	my $cmd = shift;
+	my @arguments = @_;
+
+	switch($cmd) {
+		case "config" {
+			$self->config(@arguments);
+		}
+		else {
+			if (defined $cmd) {
+				print "Unknown argument $cmd\n";
+			} else {
+				print "Show help";
+			}
+		}
+	}
 }
 
 =head1 AUTHOR
