@@ -52,7 +52,7 @@ sub new {
 		location => $ENV{"HOME"} . '/.config/kirinki',
 		filename => 'kirinkirc',
 		filepath => $ENV{"HOME"} . '/.config/kirinki/kirinkirc',
-		data => {},
+		data => Config::Tiny->new(),
 	};
 
 	bless $self, $class;
@@ -185,6 +185,10 @@ sub set {
 
 	my $level = $self->{'data'};
 	my @configs = $self->getKeys($config);
+	if (@configs < 2) {
+		return undef();
+	}
+
 	my $i = 0;
 	foreach my $cfg (@configs) {
 		if ($i == $#configs) {
@@ -271,6 +275,18 @@ sub delete {
 	}
 
 	return 1;
+}
+
+=head clean
+
+Cleans all the config data.
+
+=cut
+
+sub clean {
+	my $self = shift;
+
+	$self->{'data'} = Config::Tiny->new();
 }
 
 =head2 str

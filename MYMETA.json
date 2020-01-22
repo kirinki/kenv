@@ -21,7 +21,8 @@
       },
       "runtime" : {
          "requires" : {
-            "Config::Tiny" : "2.24"
+            "Config::Tiny" : "2.24",
+            "Switch" : "2.17"
          }
       },
       "test" : {

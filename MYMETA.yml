@@ -25,6 +25,7 @@ provides:
     version: '0.01'
 requires:
   Config::Tiny: '2.24'
+  Switch: '2.17'
 resources:
   license: http://www.perlfoundation.org/artistic_license_2_0
 version: '0.02'

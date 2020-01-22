@@ -5,3 +5,4 @@ use warnings;
 use kirinki;
 
 my $kirinki = kirinki->new();
+$kirinki->cmd(@ARGV);
