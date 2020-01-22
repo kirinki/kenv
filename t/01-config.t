@@ -20,13 +20,13 @@ ok($config->exists('Test') == 0);
 
 ok($config->set('level1.level2', 1));
 ok($config->get('level1.level2') == 1);
-ok(length($config->str) > 0);
+ok(length($config->str()) > 0);
 ok($config->delete('level1.level2'));
 ok($config->exists('level1.level2') == 0);
 
 ok($config->set('level1.level2.level3', 1));
 ok($config->get('level1.level2.level3') == 1);
-ok(length($config->str) > 0);
+ok(length($config->str()) > 0);
 ok($config->delete('level1.level2.level3'));
 ok($config->exists('level1.level2.level3') == 0);
 
