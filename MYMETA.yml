@@ -16,10 +16,10 @@ name: kirinki
 provides:
   kirinki:
     file: lib/kirinki.pm
-    version: '0.02'
+    version: '0.03'
   kirinki::config:
     file: lib/kirinki/config.pm
-    version: '0.01'
+    version: '0.02'
   kirinki::git:
     file: lib/kirinki/git.pm
     version: '0.01'
@@ -28,5 +28,5 @@ requires:
   Switch: '2.17'
 resources:
   license: http://www.perlfoundation.org/artistic_license_2_0
-version: '0.02'
+version: '0.03'
 x_serialization_backend: 'CPAN::Meta::YAML version 0.018'
