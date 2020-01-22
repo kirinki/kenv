@@ -54,6 +54,8 @@ sub new {
 
 	bless $self, $class;
 
+	$self->init();
+
 	return $self;
 }
 
@@ -66,6 +68,19 @@ the values as much as possible.
 
 sub init {
 	my $self = shift;
+
+	my @mandatory = qw/github.user github.password/;
+
+	$self->{'config'}->load();
+	for my $cfg (@mandatory) {
+		unless ($self->{'config'}->exists($cfg)) {
+			print "Please introduce $cfg: ";
+			chomp(my $value = <STDIN>);
+			die "Unable to save $cfg\n"
+				unless $self->{'config'}->set($cfg, $value);
+			$self->{'config'}->save();
+		}
+	}
 }
 
 =head2 config
