@@ -6,6 +6,7 @@ use warnings;
 
 use Config::Tiny;
 use Scalar::Util qw/reftype/;
+use Fcntl ':mode';
 
 =head1 NAME
 
@@ -52,18 +53,18 @@ sub new {
 	my $cfgFile = shift;
 
 	$cfgDir = $ENV{"HOME"} . '/.config/kirinki' unless defined $cfgDir;
-	$cfgFile = 'kirinkirc' unless defined $cfgFile;
+	$cfgFile = 'kenvrc' unless defined $cfgFile;
 
 	my $self = {
 		location => $cfgDir,
-		filename => 'kirinkirc',
+		filename => $cfgFile,
 		filepath => $cfgDir . '/' . $cfgFile,
 		data => Config::Tiny->new(),
+		mandatoryCfgs => ["general.basedir"],
+		optionalCfgs => ["github.user", "github.password"],
 	};
 
 	bless $self, $class;
-
-	$self->load();
 
 	return $self;
 }
@@ -77,16 +78,18 @@ Initialize all the configurations.
 sub init {
 	my $self = shift;
 
-	my @mandatory = qw/general.basedir/;
-	my @optional = qw/github.user github.password/;
 
 	$self->load();
-	for my $cfg (@mandatory) {
+	for my $cfg (@{ $self->{'mandatoryCfgs'} }) {
 		$self->initConfig($cfg) unless ($self->exists($cfg));
 	}
+}
+
+sub initOptionals {
+	my $self = shift;
 
 	my %ask;
-	for my $cfg (@optional) {
+	for my $cfg (@{ $self->{'optionalCfgs'} }) {
 		unless ($self->exists($cfg)) {
 			my @keys = $self->getKeys($cfg);
 			unless (exists($ask{$keys[0]})) {
@@ -156,6 +159,16 @@ sub checkConfigFile {
 			or die 'Could not open file ' . $self->{'filepath'} . " $!";
 		print $fh "[general]\n";
 		close $fh;
+		chmod (0600, $self->{'filepath'})
+			or die "Couldn't set the right permissions to the config file\n";
+	}
+
+	my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, $atime, $mtime,
+		$ctime, $blksize, $blocks) = lstat($self->{'filepath'});
+	# S_IMODE returns 384 for the mode 0600.
+	unless (S_IMODE($mode) eq "384") {
+		print 'Warning: ' . $self->{'filepath'} .
+			" has the wrong permissions, please set it to 0600\n";
 	}
 }
 

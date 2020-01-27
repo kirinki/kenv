@@ -74,6 +74,7 @@ sub config {
 	switch($action) {
 		case "init" {
 			$self->{'config'}->init();
+			$self->{'config'}->initOptionals();
 		}
 		case "list" {
 			print $self->{'config'}->str();
