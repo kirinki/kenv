@@ -18,7 +18,15 @@ jobs:
         ./Build
     - name: Test
       run: ./Build test
-    - name: install
-      run: ./Build install
     - name: Prove
       run: prove -lv t
+    - name: Test All
+      run: ./Build testall
+    - name: install
+      run: ./Build install
+    - name: Dist Test
+      run: ./Build disttest
+    - name: Dist Build
+      run: ./Build dist
+    - name: Dist Sign
+      run: ./Build distsign
