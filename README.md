@@ -1,7 +1,7 @@
-# kirinki
+# kenv
 
-Kirinki is a command line with it's associated perl modules to manage the kirinki
-projects environment.
+Kenv is a command line with it's associated perl modules to manage the kirinki
+environment.
 
 ## INSTALLATION
 
