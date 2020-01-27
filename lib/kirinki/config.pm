@@ -71,7 +71,7 @@ sub new {
 
 =head2 init
 
-Initialize all the configurations.
+Initialize the mandatory configurations.
 
 =cut
 
@@ -84,6 +84,12 @@ sub init {
 		$self->initConfig($cfg) unless ($self->exists($cfg));
 	}
 }
+
+=head2 initOptionals
+
+Initialize the optional configurations.
+
+=cut
 
 sub initOptionals {
 	my $self = shift;
