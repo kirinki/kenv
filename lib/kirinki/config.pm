@@ -48,10 +48,16 @@ Create a new configuration object.
 
 sub new {
 	my $class = shift;
+	my $cfgDir = shift;
+	my $cfgFile = shift;
+
+	$cfgDir = $ENV{"HOME"} . '/.config/kirinki' unless defined $cfgDir;
+	$cfgFile = 'kirinkirc' unless defined $cfgFile;
+
 	my $self = {
-		location => $ENV{"HOME"} . '/.config/kirinki',
+		location => $cfgDir,
 		filename => 'kirinkirc',
-		filepath => $ENV{"HOME"} . '/.config/kirinki/kirinkirc',
+		filepath => $cfgDir . '/' . $cfgFile,
 		data => Config::Tiny->new(),
 	};
 

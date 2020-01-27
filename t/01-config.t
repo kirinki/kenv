@@ -9,8 +9,7 @@ use kirinki::config;
 
 plan tests => 20;
 
-my $config = kirinki::config->new();
-$config->{'filepath'} = '/tmp/test.ini';
+my $config = kirinki::config->new('/tmp', 'test.ini');
 $config->load();
 
 is($config->set('Test', 0), undef);
