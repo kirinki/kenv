@@ -7,9 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: '5.30'
     - name: Requirements
-      run: |
-        cpan -i Module::Build
+      run: cpanm --installdeps .
     - name: Build
       run: |
         perl Build.PL
@@ -18,3 +20,5 @@ jobs:
       run: ./Build test
     - name: install
       run: ./Build install
+    - name: Prove
+      run: prove -lv t
