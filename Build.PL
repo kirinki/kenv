@@ -21,7 +21,7 @@ my $builder = Module::Build->new(
 		'Switch' => '2.17',
 	},
 	add_to_cleanup	   => [ 'kirinki-*' ],
-	script_files => ['kirinki'],
+	script_files => ['kenv'],
 	);
 
 $builder->create_build_script();
