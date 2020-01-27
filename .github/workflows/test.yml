@@ -7,6 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Requirements
+      run: |
+        cpan -i Module::Build
     - name: Build
       run: |
         perl Build.PL
