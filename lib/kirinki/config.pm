@@ -351,7 +351,7 @@ sub delete {
 	return 1;
 }
 
-=head clean
+=head2 clean
 
 Cleans all the config data.
 
