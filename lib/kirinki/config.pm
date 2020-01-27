@@ -4,9 +4,11 @@ use 5.006;
 use strict;
 use warnings;
 
+use Fcntl ':mode';
+
 use Config::Tiny;
 use Scalar::Util qw/reftype/;
-use Fcntl ':mode';
+use MIME::Base64;
 
 =head1 NAME
 
@@ -78,7 +80,6 @@ Initialize the mandatory configurations.
 sub init {
 	my $self = shift;
 
-
 	$self->load();
 	for my $cfg (@{ $self->{'mandatoryCfgs'} }) {
 		$self->initConfig($cfg) unless ($self->exists($cfg));
@@ -122,6 +123,10 @@ sub initConfig {
 	return $cfg unless defined $cfg;
 
 	my $value = $self->configInput($cfg);
+	if ($cfg =~ /.*(password|pass).*/) {
+		$value = $self->encrypt($value);
+	}
+
 	die "Unable to save $cfg\n"
 		unless $self->set($cfg, $value);
 	$self->save();
@@ -240,9 +245,7 @@ sub get {
 	my $self = shift;
 	my $config = shift;
 
-	unless (defined $config) {
-		return undef();
-	}
+	return $config unless defined $config;
 
 	my $level = $self->{'data'};
 	my @configs = $self->getKeys($config);
@@ -423,6 +426,40 @@ sub str {
 	return $res;
 }
 
+=head2 encrypt
+
+Encrypts an input in base64.
+
+=cut
+
+sub encrypt {
+	my $self = shift;
+	my $input = shift;
+
+	return $input unless defined $input;
+
+	return undef() unless length($input);
+
+	return encode_base64($input, '');
+}
+
+=head2 decrypt
+
+Decrypts an input from base64.
+
+=cut
+
+sub decrypt {
+	my $self = shift;
+	my $input = shift;
+
+	return $input unless defined $input;
+
+	return undef() unless length($input);
+
+	return decode_base64($input);
+}
+
 =head1 AUTHOR
 
 Pablo Alvarez de Sotomayor Posadillo, C<< <palvarez at ritho.net> >>
@@ -432,9 +469,6 @@ Pablo Alvarez de Sotomayor Posadillo, C<< <palvarez at ritho.net> >>
 Please report any bugs or feature requests to C<bug-. at rt.cpan.org>, or through
 the web interface at L<https://rt.cpan.org/NoAuth/ReportBug.html?Queue=.>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
-
-
-
 
 =head1 SUPPORT
 

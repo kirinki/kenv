@@ -20,6 +20,7 @@ my $builder = Module::Build->new(
 	requires => {
 		'Config::Tiny' => '2.24',
 		'Switch' => '2.17',
+		'MIME::Base64' => '3.15',
 	},
 	add_to_cleanup	   => [ 'kirinki-*' ],
 	script_files => ['kenv'],
