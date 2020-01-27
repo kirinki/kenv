@@ -12,6 +12,7 @@ my $builder = Module::Build->new(
 	release_status		=> 'stable',
 	configure_requires => {
 		'Module::Build' => '0.4004',
+		'Module::Signature' => '0.83',
 	},
 	test_requires => {
 		'Test::More' => '0',
