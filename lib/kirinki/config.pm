@@ -62,6 +62,74 @@ sub new {
 	return $self;
 }
 
+=head2 init
+
+Initialize all the configurations.
+
+=cut
+
+sub init {
+	my $self = shift;
+
+	my @mandatory = qw/general.basedir/;
+	my @optional = qw/github.user github.password/;
+
+	$self->load();
+	for my $cfg (@mandatory) {
+		$self->initConfig($cfg) unless ($self->exists($cfg));
+	}
+
+	my %ask;
+	for my $cfg (@optional) {
+		unless ($self->exists($cfg)) {
+			my @keys = $self->getKeys($cfg);
+			unless (exists($ask{$keys[0]})) {
+				print 'Do you want to configure ' . $keys[0] . '? (Y/n) ';
+				chomp(my $answer = <STDIN>);
+				$ask{$keys[0]} = ($answer =~ /(^[nN])/)
+			}
+
+			$self->initConfig($cfg) unless ($ask{$keys[0]});
+		}
+	}
+}
+
+=head2 initConfig
+
+Initialize a specific configuration.
+
+=cut
+
+sub initConfig {
+	my $self = shift;
+	my $cfg = shift;
+
+	return $cfg unless defined $cfg;
+
+	my $value = $self->configInput($cfg);
+	die "Unable to save $cfg\n"
+		unless $self->set($cfg, $value);
+	$self->save();
+}
+
+=head2 configInput
+
+Read a configuration value from the user input.
+
+=cut
+
+sub configInput {
+	my $self = shift;
+	my $cfg = shift;
+
+	return $cfg unless defined $cfg;
+
+	print "Please introduce $cfg: ";
+	chomp(my $out = <STDIN>);
+
+	return $out;
+}
+
 =head2 checkConfigFile
 
 Checks that the config file is fine.

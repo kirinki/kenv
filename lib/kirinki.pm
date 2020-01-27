@@ -55,33 +55,9 @@ sub new {
 
 	bless $self, $class;
 
-	$self->init();
+	$self->{'config'}->init();
 
 	return $self;
-}
-
-=head2 init
-
-The init function initialize the kirinki environment configuration, guessing
-the values as much as possible.
-
-=cut
-
-sub init {
-	my $self = shift;
-
-	my @mandatory = qw/github.user github.password/;
-
-	$self->{'config'}->load();
-	for my $cfg (@mandatory) {
-		unless ($self->{'config'}->exists($cfg)) {
-			print "Please introduce $cfg: ";
-			chomp(my $value = <STDIN>);
-			die "Unable to save $cfg\n"
-				unless $self->{'config'}->set($cfg, $value);
-			$self->{'config'}->save();
-		}
-	}
 }
 
 =head2 config
@@ -96,6 +72,9 @@ sub config {
 	my @params = @_;
 
 	switch($action) {
+		case "init" {
+			$self->{'config'}->init();
+		}
 		case "list" {
 			print $self->{'config'}->str();
 		}
