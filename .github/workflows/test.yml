@@ -30,3 +30,7 @@ jobs:
       run: ./Build dist
     - name: Dist Sign
       run: ./Build distsign
+    - name: Test coverage
+      run: |
+        ./Build testcover
+        cover | grep Total | awk -F ' ' '{print $2}' | xargs perl -e 'if ($ARGV[0] < 60) { print "Statement coverage is " . $ARGV[0]; } else { print "0"; }' | xargs test 0 -ne
