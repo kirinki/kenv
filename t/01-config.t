@@ -7,7 +7,7 @@ use Test::More;
 
 use kirinki::config;
 
-plan tests => 28;
+plan tests => 25;
 
 my $config = kirinki::config->new('/tmp', 'test.ini');
 $config->load();
@@ -51,9 +51,8 @@ ok($config->set('github.user', 'i02sopop'));
 ok($config->set('github.password', 'i02sopop'));
 $config->save();
 $config->init();
-ok($config->delete('general.basedir'));
-ok($config->delete('github.user'));
-ok($config->delete('github.password'));
+$config->initOptionals();
+$config->clean();
 $config->save();
 
 diag( "Testing kirinki config" );
