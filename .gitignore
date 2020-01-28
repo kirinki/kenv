@@ -3,8 +3,9 @@
 /Build
 /_build
 /README
-/MYMETA.json
+/MYMETA.json*
 /MYMETA.yml
 /META.json
 /META.yml
 /kirinki-*
+/cover_db
