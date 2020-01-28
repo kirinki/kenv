@@ -80,7 +80,6 @@ Initialize the mandatory configurations.
 sub init {
 	my $self = shift;
 
-
 	$self->load();
 	for my $cfg (@{ $self->{'mandatoryCfgs'} }) {
 		$self->initConfig($cfg) unless ($self->exists($cfg));
@@ -124,6 +123,10 @@ sub initConfig {
 	return $cfg unless defined $cfg;
 
 	my $value = $self->configInput($cfg);
+	if ($cfg =~ /.*(password|pass).*/) {
+		$value = $self->encrypt($value);
+	}
+
 	die "Unable to save $cfg\n"
 		unless $self->set($cfg, $value);
 	$self->save();
@@ -242,9 +245,7 @@ sub get {
 	my $self = shift;
 	my $config = shift;
 
-	unless (defined $config) {
-		return undef();
-	}
+	return $config unless defined $config;
 
 	my $level = $self->{'data'};
 	my @configs = $self->getKeys($config);
@@ -437,6 +438,8 @@ sub encrypt {
 
 	return $input unless defined $input;
 
+	return undef() unless length($input);
+
 	return encode_base64($input);
 }
 
@@ -451,6 +454,8 @@ sub decrypt {
 	my $input = shift;
 
 	return $input unless defined $input;
+
+	return undef() unless length($input);
 
 	return decode_base64($input);
 }
