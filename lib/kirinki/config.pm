@@ -440,7 +440,7 @@ sub encrypt {
 
 	return undef() unless length($input);
 
-	return encode_base64($input);
+	return encode_base64($input, '');
 }
 
 =head2 decrypt
