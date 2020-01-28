@@ -7,7 +7,7 @@ use Test::More;
 
 use kirinki::config;
 
-plan tests => 20;
+plan tests => 22;
 
 my $config = kirinki::config->new('/tmp', 'test.ini');
 $config->load();
@@ -40,5 +40,10 @@ ok($config->exists('level1.level2.level3') == 0);
 $config->save();
 $config->load();
 ok($config->exists('level1.level2.level3') == 0);
+
+my $encrypted = $config->encrypt('Test');
+my $unencrypted = $config->decrypt($encrypted);
+ok($encrypted ne 'Test', "$encrypted is Test");
+ok($unencrypted eq 'Test', "$unencrypted is not Test");
 
 diag( "Testing kirinki config" );
