@@ -7,7 +7,7 @@ use Test::More;
 
 use kirinki::config;
 
-plan tests => 22;
+plan tests => 28;
 
 my $config = kirinki::config->new('/tmp', 'test.ini');
 $config->load();
@@ -45,5 +45,15 @@ my $encrypted = $config->encrypt('Test');
 my $unencrypted = $config->decrypt($encrypted);
 ok($encrypted ne 'Test', "$encrypted is Test");
 ok($unencrypted eq 'Test', "$unencrypted is not Test");
+
+ok($config->set('general.basedir', '/tmp'));
+ok($config->set('github.user', 'i02sopop'));
+ok($config->set('github.password', 'i02sopop'));
+$config->save();
+$config->init();
+ok($config->delete('general.basedir'));
+ok($config->delete('github.user'));
+ok($config->delete('github.password'));
+$config->save();
 
 diag( "Testing kirinki config" );
