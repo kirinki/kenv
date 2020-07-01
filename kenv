@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use kirinki;
+use kirinki::env;
 
-my $kirinki = kirinki->new();
-$kirinki->cmd(@ARGV);
+my $kenv = kirinki::env->new();
+$kenv->cmd(@ARGV);
