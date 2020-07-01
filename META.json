@@ -1,0 +1,58 @@
+{
+   "abstract" : "Kirinki environment manager.",
+   "author" : [
+      "Pablo Alvarez de Sotomayor Posadillo <palvarez@ritho.net>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4231",
+   "license" : [
+      "artistic_2"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "kirinki-env",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.4004",
+            "Module::Signature" : "0.83"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Config::Tiny" : "2.24",
+            "MIME::Base64" : "3.15",
+            "Switch" : "2.17"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0"
+         }
+      }
+   },
+   "provides" : {
+      "kirinki::env" : {
+         "file" : "lib/kirinki/env.pm",
+         "version" : "0.03"
+      },
+      "kirinki::env::config" : {
+         "file" : "lib/kirinki/env/config.pm",
+         "version" : "0.02"
+      },
+      "kirinki::git" : {
+         "file" : "lib/kirinki/git.pm",
+         "version" : "0.01"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://www.perlfoundation.org/artistic_license_2_0"
+      ]
+   },
+   "version" : "0.03",
+   "x_serialization_backend" : "JSON::PP version 4.04"
+}

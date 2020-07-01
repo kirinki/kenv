@@ -1,0 +1,10 @@
+\.github
+^MYMETA\.yml$
+^MYMETA\.json$
+MANIFEST\.
+kirinki-
+blib
+_build
+Build
+\.git
+\.gitignore

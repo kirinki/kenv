@@ -5,11 +5,11 @@ use strict;
 use warnings;
 use Test::More;
 
-use kirinki::config;
+use kirinki::env::config;
 
 plan tests => 20;
 
-my $config = kirinki::config->new('/tmp', 'test.ini');
+my $config = kirinki::env::config->new('/tmp', 'test.ini');
 $config->load();
 
 is($config->set('Test', 0), undef);
@@ -41,4 +41,4 @@ $config->save();
 $config->load();
 ok($config->exists('level1.level2.level3') == 0);
 
-diag( "Testing kirinki config" );
+# diag( "Testing kirinki::env::config $kirinki::env::config::VERSION, Perl $], $^X" );

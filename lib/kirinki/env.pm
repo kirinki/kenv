@@ -1,19 +1,19 @@
-package kirinki;
+package kirinki::env;
 
 use 5.006;
 use strict;
 use warnings;
 use Switch;
 
-use kirinki::config;
+use kirinki::env::config;
 
 =head1 NAME
 
-kirinki - Kirinki environment manager.
+kirinki::env - Kirinki environment manager.
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
@@ -23,34 +23,28 @@ our $VERSION = '0.03';
 =head1 SYNOPSIS
 
 This module implements several commands to manage the kirinki environment,
-including creating a new repository in a github organization, cloning a repo
-from github, do commits on one or several projects, build, run and test one
-or several projects, ...
+including creating a new repository, cloning a repo from a server, do commits
+on one or several projects, build, run and test one or several projects, ...
 
 You can start using it with:
 
-    use kirinki;
+    use kirinki::env;
 
-    my $foo = kirinki->new();
+    my $foo = env->new();
     ...
-
-=head1 EXPORT
-
-A list of functions that can be exported. You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
 
 =head1 SUBROUTINES/METHODS
 
 =head2 new
 
-Create a new Kirinki object.
+Create a new env object.
 
 =cut
 
 sub new {
 	my $class = shift;
 	my $self = {
-		config => kirinki::config->new()
+		config => kirinki::env::config->new()
 	};
 
 	bless $self, $class;
@@ -75,11 +69,9 @@ sub config {
 		case "init" {
 			$self->{'config'}->init();
 			$self->{'config'}->initOptionals();
-		}
-		case "list" {
+		} case "list" {
 			print $self->{'config'}->str();
-		}
-		case "set" {
+		} case "set" {
 			my $key = shift @params;
 			my $value = shift @params;
 			unless (defined($key) && defined($value)) {
@@ -93,8 +85,7 @@ sub config {
 			die "Unable to save $key\n"
 				unless $self->{'config'}->set($key, $value);
 			$self->{'config'}->save();
-		}
-		case "unset" {
+		} case "unset" {
 			my $key = shift @params;
 			unless (defined($key)) {
 				die "Missing parameters\n";
@@ -107,12 +98,10 @@ sub config {
 			die "Unable to delete $key\n"
 				unless $self->{'config'}->delete($key);
 			$self->{'config'}->save();
-		}
-		case "clean" {
+		} case "clean" {
 			$self->{'config'}->clean();
 			$self->{'config'}->save();
-		}
-		else {
+		} else {
 			if (defined $action) {
 				print "Unknown action $action.\n";
 			} else {
@@ -130,7 +119,7 @@ sub config {
 
 =head2 cmd
 
-Handle the kirinki commands.
+Handle the kirinki env commands
 
 =cut
 
@@ -167,7 +156,7 @@ automatically be notified of progress on your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc kirinki
+    perldoc kirinki::env
 
 
 You can also look for information at:
@@ -204,4 +193,4 @@ This is free software, licensed under:
 
 =cut
 
-1; # End of kirinki
+1; # End of kirinki::env

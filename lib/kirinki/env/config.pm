@@ -1,4 +1,4 @@
-package kirinki::config;
+package kirinki::env::config;
 
 use 5.006;
 use strict;
@@ -12,11 +12,11 @@ use MIME::Base64;
 
 =head1 NAME
 
-kirinki::config - Manage the configurations of the kirinki command.
+kirinki::env::config - Manage the configurations of the kenv command.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
@@ -25,15 +25,15 @@ our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
-The module kirinki::config handles all the configurations for the kirinki
+The module kirinki::env::config handles all the configurations for the kenv
 command, parsing the configuration file, serving the configurations and
 saving the changes.
 
 You can start using it with:
 
-    use kirinki::config;
+    use kirinki::env::config;
 
-    my $foo = kirinki::config->new();
+    my $foo = kirinki::env::config->new();
     ...
 
 =head1 EXPORT
@@ -474,7 +474,7 @@ automatically be notified of progress on your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc kirinki::config
+    perldoc kirinki::env::config
 
 
 You can also look for information at:
@@ -514,4 +514,4 @@ This is free software, licensed under:
 
 =cut
 
-1; # End of kirinki::config
+1; # End of kirinki::env::config

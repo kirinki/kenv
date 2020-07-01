@@ -41,6 +41,13 @@ if you don't export anything, such as for a purely object-oriented module.
 =cut
 
 sub new {
+	my $class = shift;
+	my $self = {
+	};
+
+	bless $self, $class;
+
+	return $self;
 }
 
 =head2 init

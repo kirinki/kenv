@@ -28,5 +28,3 @@ jobs:
       run: ./Build disttest
     - name: Dist Build
       run: ./Build dist
-    - name: Dist Sign
-      run: ./Build distsign
