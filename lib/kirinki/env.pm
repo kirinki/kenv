@@ -69,11 +69,9 @@ sub config {
 		case "init" {
 			$self->{'config'}->init();
 			$self->{'config'}->initOptionals();
-		}
-		case "list" {
+		} case "list" {
 			print $self->{'config'}->str();
-		}
-		case "set" {
+		} case "set" {
 			my $key = shift @params;
 			my $value = shift @params;
 			unless (defined($key) && defined($value)) {
@@ -87,8 +85,7 @@ sub config {
 			die "Unable to save $key\n"
 				unless $self->{'config'}->set($key, $value);
 			$self->{'config'}->save();
-		}
-		case "unset" {
+		} case "unset" {
 			my $key = shift @params;
 			unless (defined($key)) {
 				die "Missing parameters\n";
@@ -101,12 +98,10 @@ sub config {
 			die "Unable to delete $key\n"
 				unless $self->{'config'}->delete($key);
 			$self->{'config'}->save();
-		}
-		case "clean" {
+		} case "clean" {
 			$self->{'config'}->clean();
 			$self->{'config'}->save();
-		}
-		else {
+		} else {
 			if (defined $action) {
 				print "Unknown action $action.\n";
 			} else {
