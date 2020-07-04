@@ -7,7 +7,7 @@ use Test::More;
 
 use kirinki::env::config;
 
-plan tests => 25;
+plan tests => 27;
 
 my $config = kirinki::env::config->new('/tmp', 'test.ini');
 $config->load();
@@ -54,5 +54,10 @@ $config->init();
 $config->initOptionals();
 $config->clean();
 $config->save();
+
+is($config->set(), undef);
+is($config->set('test'), undef);
+
+unlink '/tmp/test.ini';
 
 diag( "Testing kirinki::env::config $kirinki::env::config::VERSION, Perl $], $^X" );
