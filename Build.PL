@@ -30,6 +30,7 @@ my $builder = $class->new(
 	test_requires => {
 		'Test::More' => '0',
 		'Software::License' => '0',
+		'Devel::Cover' => '0',
 	},
 	requires => {
 		'Config::Tiny' => '2.24',
