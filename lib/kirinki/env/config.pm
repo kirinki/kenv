@@ -36,11 +36,6 @@ You can start using it with:
     my $foo = kirinki::env::config->new();
     ...
 
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
-
 =head1 SUBROUTINES/METHODS
 
 =head2 new
@@ -405,7 +400,7 @@ sub str {
 	}
 
 	my $res = "";
-	foreach my $cfg (keys %$configs) {
+	foreach my $cfg (sort keys %$configs) {
 		my $type = ref $configs->{$cfg};
 		if ($type && reftype $configs->{$cfg} eq reftype {}) {
 			my $newParent = $parent;

@@ -43,8 +43,11 @@ Create a new env object.
 
 sub new {
 	my $class = shift;
+	my $cfgDir = shift;
+	my $cfgFile = shift;
+
 	my $self = {
-		config => kirinki::env::config->new()
+		config => kirinki::env::config->new($cfgDir, $cfgFile)
 	};
 
 	bless $self, $class;
@@ -75,7 +78,8 @@ sub config {
 			my $key = shift @params;
 			my $value = shift @params;
 			unless (defined($key) && defined($value)) {
-				die "Missing parameters\n";
+				print "Missing parameters\n";
+				return undef();
 			}
 
 			if (@params > 0) {

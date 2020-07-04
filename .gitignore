@@ -6,3 +6,5 @@
 /MYMETA.json
 /MYMETA.yml
 /kirinki-*
+/*.lock
+/cover_db
